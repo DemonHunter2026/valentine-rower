@@ -11,48 +11,38 @@
   body {
     margin: 0;
     height: 100vh;
-    background: linear-gradient(to bottom, #c9e9f7 0%, #fdfbfb 70%);
+    background: linear-gradient(to bottom, #cfe9f7, #fff);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    overflow: hidden;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    overflow: hidden;
-  }
-
-  .card {
-    width: 92%;
-    max-width: 360px;
-    background: white;
-    padding: 26px;
-    border-radius: 26px;
     text-align: center;
-    box-shadow: 0 25px 45px rgba(0,0,0,0.15);
-    animation: rise 0.9s cubic-bezier(.2,.8,.2,1);
-    position: relative;
   }
 
-  @keyframes rise {
-    from { opacity: 0; transform: translateY(50px) scale(0.96); }
-    to   { opacity: 1; transform: translateY(0) scale(1); }
+  .container {
+    width: 100%;
+    max-width: 600px;
+    padding: 24px;
   }
 
   h1 {
-    font-size: 22px;
+    font-size: 28px;
     color: #ff5c8a;
-    margin-bottom: 6px;
+    margin-bottom: 10px;
   }
 
   p {
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 18px;
+    font-size: 16px;
+    color: #555;
+    margin-bottom: 30px;
   }
 
   /* ROWING SCENE */
   .scene {
     position: relative;
-    height: 150px;
-    margin-bottom: 22px;
+    height: 160px;
+    margin-bottom: 40px;
     overflow: hidden;
   }
 
@@ -60,25 +50,25 @@
     position: absolute;
     bottom: 0;
     width: 200%;
-    height: 55px;
+    height: 60px;
     background: linear-gradient(to right, #b3e6f5, #d9f4fb);
     animation: waterMove 6s linear infinite;
   }
 
   @keyframes waterMove {
     from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
+    to { transform: translateX(-50%); }
   }
 
   .boat {
     position: absolute;
-    bottom: 42px;
+    bottom: 48px;
     left: 50%;
     transform: translateX(-50%);
-    width: 140px;
-    height: 22px;
+    width: 150px;
+    height: 24px;
     background: #ff85a1;
-    border-radius: 0 0 24px 24px;
+    border-radius: 0 0 26px 26px;
     animation: boatBob 2.4s ease-in-out infinite;
   }
 
@@ -89,10 +79,10 @@
 
   .rower {
     position: absolute;
-    top: -30px;
+    top: -32px;
     left: 50%;
     transform: translateX(-50%);
-    font-size: 28px;
+    font-size: 30px;
   }
 
   .oar {
@@ -104,82 +94,82 @@
   }
 
   .oar.left {
-    left: -48px;
+    left: -50px;
     transform-origin: right center;
-    animation: strokeLeft 1.6s cubic-bezier(.4,.0,.6,1) infinite;
+    animation: strokeLeft 1.6s ease-in-out infinite;
   }
 
   .oar.right {
-    right: -48px;
+    right: -50px;
     transform-origin: left center;
-    animation: strokeRight 1.6s cubic-bezier(.4,.0,.6,1) infinite;
+    animation: strokeRight 1.6s ease-in-out infinite;
   }
 
   @keyframes strokeLeft {
-    0%   { transform: rotate(40deg); }
-    35%  { transform: rotate(-20deg); }
-    60%  { transform: rotate(-20deg); }
+    0% { transform: rotate(40deg); }
+    35% { transform: rotate(-20deg); }
     100% { transform: rotate(40deg); }
   }
 
   @keyframes strokeRight {
-    0%   { transform: rotate(-40deg); }
-    35%  { transform: rotate(20deg); }
-    60%  { transform: rotate(20deg); }
+    0% { transform: rotate(-40deg); }
+    35% { transform: rotate(20deg); }
     100% { transform: rotate(-40deg); }
   }
 
   /* BUTTONS */
-  .btn-row {
+  .buttons {
+    position: relative;
+    height: 70px;
     display: flex;
     justify-content: center;
-    gap: 16px;
+    gap: 24px;
   }
 
   button {
-    padding: 13px 24px;
+    padding: 14px 30px;
     border-radius: 999px;
     border: none;
-    font-size: 15px;
+    font-size: 16px;
+    cursor: pointer;
   }
 
   #yesBtn {
     background: linear-gradient(135deg, #ff5c8a, #ff85a1);
     color: white;
-    box-shadow: 0 10px 20px rgba(255,92,138,0.45);
+    box-shadow: 0 10px 22px rgba(255,92,138,0.45);
   }
 
   #noBtn {
     background: #eee;
     color: #444;
-    position: fixed;
-    pointer-events: none;
-    transition: transform 0.5s cubic-bezier(.2,.9,.3,1),
-                left 0.5s cubic-bezier(.2,.9,.3,1),
-                top 0.5s cubic-bezier(.2,.9,.3,1);
+    position: relative;
+    transition: transform 0.6s cubic-bezier(.2,.9,.3,1);
   }
 
-  /* HEARTS */
+  /* HEART SHOWER */
   .heart {
     position: fixed;
-    font-size: 18px;
+    top: -20px;
+    font-size: 20px;
     pointer-events: none;
-    animation: floatUp 3.2s ease forwards;
+    animation: fall 3.5s linear forwards;
   }
 
-  @keyframes floatUp {
-    0% { opacity: 0; transform: translateY(10px) scale(0.7); }
-    15% { opacity: 1; }
-    100% { opacity: 0; transform: translateY(-160px) scale(1.5); }
+  @keyframes fall {
+    to {
+      transform: translateY(110vh) rotate(360deg);
+      opacity: 0;
+    }
   }
 </style>
 </head>
 
 <body>
 
-<div class="card">
+<div class="container">
   <h1>Will you be my Valentine? 🚣‍♀️💗</h1>
-  <p>Just a smooth stroke… no pressure 😌</p>
+  <p>Just thought I’d ask — nothing heavy, just a smile 🙂</p>
 
   <div class="scene">
     <div class="boat">
@@ -190,7 +180,7 @@
     <div class="water"></div>
   </div>
 
-  <div class="btn-row">
+  <div class="buttons">
     <button id="yesBtn">Yes 💕</button>
     <button id="noBtn">No 🙃</button>
   </div>
@@ -200,29 +190,27 @@
   const noBtn = document.getElementById("noBtn");
   const yesBtn = document.getElementById("yesBtn");
 
-  function rowAway() {
-    const pad = 20;
-    const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - pad);
-    const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - pad);
-
-    noBtn.style.left = `${x}px`;
-    noBtn.style.top = `${y}px`;
-    noBtn.style.transform = `rotate(${Math.random()*12-6}deg)`;
+  function moveNoSlow() {
+    const shiftX = Math.random() * 140 - 70;
+    const shiftY = Math.random() * 60 - 30;
+    noBtn.style.transform = `translate(${shiftX}px, ${shiftY}px)`;
   }
 
-  function heartPulse() {
-    const h = document.createElement("div");
-    h.className = "heart";
-    h.textContent = "💗";
-    h.style.left = Math.random() * window.innerWidth + "px";
-    h.style.top = window.innerHeight - 40 + "px";
-    document.body.appendChild(h);
-    setTimeout(() => h.remove(), 3200);
-  }
+  noBtn.addEventListener("mouseenter", moveNoSlow);
+  noBtn.addEventListener("touchstart", moveNoSlow);
 
-  document.addEventListener("mousemove", rowAway);
-  document.addEventListener("touchstart", rowAway);
-  rowAway();
+  function showerHearts() {
+    for (let i = 0; i < 40; i++) {
+      setTimeout(() => {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.textContent = "💗";
+        heart.style.left = Math.random() * window.innerWidth + "px";
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 3500);
+      }, i * 80);
+    }
+  }
 
   yesBtn.onclick = () => {
     document.body.innerHTML = `
@@ -235,14 +223,16 @@
         text-align:center;
         background:linear-gradient(135deg,#ff5c8a,#ff9fb8);
         color:white;
-        padding:20px;">
-        <h1 style="font-size:26px;">Nice catch at the finish 😄</h1>
-        <p style="font-size:16px;max-width:320px;">
-          How about a relaxed coffee or ice-cream?<br>
-          Zero erg tests involved ☕🍦
+        padding:24px;">
+        <h1 style="font-size:32px;margin-bottom:12px;">
+          That made me really happy 😊
+        </h1>
+        <p style="font-size:18px;max-width:420px;line-height:1.5;">
+          No pressure, no expectations.<br>
+          Just looking forward to spending some time together 💛
         </p>
       </div>`;
-    for (let i = 0; i < 16; i++) setTimeout(heartPulse, i * 120);
+    showerHearts();
   };
 </script>
 
