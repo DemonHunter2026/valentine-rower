@@ -14,49 +14,41 @@
             justify-content: center;
             height: 100vh;
             background-color: #ffe0e9;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             overflow: hidden;
             text-align: center;
         }
 
-        h1 {
-            color: #d63384;
-            font-size: 2rem;
-            margin-bottom: 20px;
-            padding: 0 10px;
-        }
-
-        /* Rowing Animation */
+        /* Fixed Rowing Animation */
         .rowing-container {
             width: 100%;
-            height: 100px;
+            height: 80px;
             position: relative;
-            margin-bottom: 30px;
+            overflow: hidden; /* Keeps boat within bounds */
+            margin-bottom: 20px;
         }
 
         .boat {
             font-size: 50px;
             position: absolute;
-            left: -100px;
-            animation: row 6s linear infinite;
+            bottom: 10px;
+            animation: row 5s linear infinite;
         }
 
         @keyframes row {
-            0% { left: -100px; transform: translateY(0); }
-            25% { transform: translateY(-10px) rotate(-5deg); }
-            50% { transform: translateY(0) rotate(0); }
-            75% { transform: translateY(-10px) rotate(-5deg); }
-            100% { left: 100%; transform: translateY(0); }
+            0% { left: -60px; }
+            100% { left: 100%; }
         }
 
-        /* Buttons */
+        h1 { color: #d63384; font-size: 1.8rem; padding: 0 15px; }
+
         .btn-container {
             display: flex;
             gap: 20px;
-            position: relative;
-            width: 100%;
             justify-content: center;
             height: 60px;
+            width: 100%;
+            margin-top: 20px;
         }
 
         button {
@@ -65,23 +57,13 @@
             border: none;
             border-radius: 50px;
             cursor: pointer;
-            transition: transform 0.2s;
             font-weight: bold;
         }
 
-        #yesBtn {
-            background-color: #ff4d6d;
-            color: white;
-            z-index: 10;
-        }
+        #yesBtn { background-color: #ff4d6d; color: white; }
+        #noBtn { background-color: #adb5bd; color: white; position: absolute; transition: 0.1s; }
 
-        #noBtn {
-            background-color: #adb5bd;
-            color: white;
-            position: absolute;
-        }
-
-        /* Success State */
+        /* Success Screen Fixes */
         #success-screen {
             display: none;
             position: fixed;
@@ -89,8 +71,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: white;
-            z-index: 100;
+            background-color: #fff;
+            z-index: 999;
             flex-direction: column;
             align-items: center;
             justify-content: center;
@@ -98,9 +80,9 @@
 
         .heart {
             position: fixed;
-            top: -10%;
+            top: -50px;
+            z-index: 1000;
             font-size: 24px;
-            user-select: none;
             animation: fall linear forwards;
         }
 
@@ -108,11 +90,7 @@
             to { transform: translateY(110vh); }
         }
 
-        .baby-bg {
-            width: 250px;
-            border-radius: 20px;
-            margin-top: 20px;
-        }
+        .baby-bg { width: 280px; border-radius: 20px; margin-top: 20px; }
     </style>
 </head>
 <body>
@@ -130,54 +108,43 @@
     </div>
 
     <div id="success-screen">
-        <h1 style="font-size: 3rem;">You d Best!</h1>
+        <h1 style="font-size: 2.5rem; color: #ff4d6d;">You d Best!</h1>
         <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGIwdm5sYXA0ZzR0eXpsYm9ueXNid3R4bmVxeXp0ZzRyeXpsYm9ueSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l41lVsYDBC0V69T68/giphy.gif" alt="Happy Baby" class="baby-bg">
     </div>
 
     <script>
         const noBtn = document.getElementById('noBtn');
-        const yesBtn = document.getElementById('yesBtn');
 
-        // Function to move the "No" button
+        // Move No Button Logic
         function moveButton() {
-            const padding = 50;
-            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
-            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
-
-            // Generate random position
-            const randomX = Math.floor(Math.random() * maxX);
-            const randomY = Math.floor(Math.random() * maxY);
-
-            noBtn.style.left = randomX + 'px';
-            noBtn.style.top = randomY + 'px';
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            noBtn.style.left = `${x}px`;
+            noBtn.style.top = `${y}px`;
         }
 
-        // Trigger on both hover (desktop) and touch start (mobile)
         noBtn.addEventListener('mouseenter', moveButton);
         noBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault(); // Prevents accidental clicking
+            e.preventDefault();
             moveButton();
         });
 
+        // Show Success and Hearts
         function showSuccess() {
             document.getElementById('main-content').style.display = 'none';
             document.getElementById('success-screen').style.display = 'flex';
-            
-            // Heart shower
-            setInterval(createHeart, 150);
+            setInterval(createHeart, 200);
         }
 
         function createHeart() {
             const heart = document.createElement('div');
             heart.classList.add('heart');
-            heart.innerHTML = '❤️';
-            heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+            heart.innerText = '❤️';
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
             document.body.appendChild(heart);
 
-            setTimeout(() => {
-                heart.remove();
-            }, 5000);
+            setTimeout(() => { heart.remove(); }, 5000);
         }
     </script>
 </body>
