@@ -1,243 +1,184 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Just Curious 🙂</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Urgent Inquiry!</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #ffe0e9;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
+            text-align: center;
+        }
 
-<style>
-  * { box-sizing: border-box; }
+        h1 {
+            color: #d63384;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
 
-  body {
-    margin: 0;
-    height: 100vh;
-    background: linear-gradient(to bottom, #c9e9f7 0%, #fdfbfb 70%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    overflow: hidden;
-  }
+        /* Rowing Animation */
+        .rowing-container {
+            width: 100%;
+            height: 100px;
+            position: relative;
+            margin-bottom: 30px;
+        }
 
-  .card {
-    width: 92%;
-    max-width: 360px;
-    background: white;
-    padding: 26px;
-    border-radius: 26px;
-    text-align: center;
-    box-shadow: 0 25px 45px rgba(0,0,0,0.15);
-    animation: rise 0.9s cubic-bezier(.2,.8,.2,1);
-    position: relative;
-  }
+        .boat {
+            font-size: 50px;
+            position: absolute;
+            left: -100px;
+            animation: row 6s linear infinite;
+        }
 
-  @keyframes rise {
-    from { opacity: 0; transform: translateY(50px) scale(0.96); }
-    to   { opacity: 1; transform: translateY(0) scale(1); }
-  }
+        @keyframes row {
+            0% { left: -100px; transform: translateY(0); }
+            25% { transform: translateY(-10px) rotate(-5deg); }
+            50% { transform: translateY(0) rotate(0); }
+            75% { transform: translateY(-10px) rotate(-5deg); }
+            100% { left: 100%; transform: translateY(0); }
+        }
 
-  h1 {
-    font-size: 22px;
-    color: #ff5c8a;
-    margin-bottom: 6px;
-  }
+        /* Buttons */
+        .btn-container {
+            display: flex;
+            gap: 20px;
+            position: relative;
+            width: 100%;
+            justify-content: center;
+            height: 60px;
+        }
 
-  p {
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 18px;
-  }
+        button {
+            padding: 15px 30px;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            font-weight: bold;
+        }
 
-  /* ROWING SCENE */
-  .scene {
-    position: relative;
-    height: 150px;
-    margin-bottom: 22px;
-    overflow: hidden;
-  }
+        #yesBtn {
+            background-color: #ff4d6d;
+            color: white;
+            z-index: 10;
+        }
 
-  .water {
-    position: absolute;
-    bottom: 0;
-    width: 200%;
-    height: 55px;
-    background: linear-gradient(to right, #b3e6f5, #d9f4fb);
-    animation: waterMove 6s linear infinite;
-  }
+        #noBtn {
+            background-color: #adb5bd;
+            color: white;
+            position: absolute;
+        }
 
-  @keyframes waterMove {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
-  }
+        /* Success State */
+        #success-screen {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: white;
+            z-index: 100;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
 
-  .boat {
-    position: absolute;
-    bottom: 42px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 140px;
-    height: 22px;
-    background: #ff85a1;
-    border-radius: 0 0 24px 24px;
-    animation: boatBob 2.4s ease-in-out infinite;
-  }
+        .heart {
+            position: fixed;
+            top: -10%;
+            font-size: 24px;
+            user-select: none;
+            animation: fall linear forwards;
+        }
 
-  @keyframes boatBob {
-    0%,100% { transform: translate(-50%, 0); }
-    50% { transform: translate(-50%, -8px); }
-  }
+        @keyframes fall {
+            to { transform: translateY(110vh); }
+        }
 
-  .rower {
-    position: absolute;
-    top: -30px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 28px;
-  }
-
-  .oar {
-    position: absolute;
-    width: 70px;
-    height: 4px;
-    background: #555;
-    top: 12px;
-  }
-
-  .oar.left {
-    left: -48px;
-    transform-origin: right center;
-    animation: strokeLeft 1.6s cubic-bezier(.4,.0,.6,1) infinite;
-  }
-
-  .oar.right {
-    right: -48px;
-    transform-origin: left center;
-    animation: strokeRight 1.6s cubic-bezier(.4,.0,.6,1) infinite;
-  }
-
-  @keyframes strokeLeft {
-    0%   { transform: rotate(40deg); }
-    35%  { transform: rotate(-20deg); }
-    60%  { transform: rotate(-20deg); }
-    100% { transform: rotate(40deg); }
-  }
-
-  @keyframes strokeRight {
-    0%   { transform: rotate(-40deg); }
-    35%  { transform: rotate(20deg); }
-    60%  { transform: rotate(20deg); }
-    100% { transform: rotate(-40deg); }
-  }
-
-  /* BUTTONS */
-  .btn-row {
-    display: flex;
-    justify-content: center;
-    gap: 16px;
-  }
-
-  button {
-    padding: 13px 24px;
-    border-radius: 999px;
-    border: none;
-    font-size: 15px;
-  }
-
-  #yesBtn {
-    background: linear-gradient(135deg, #ff5c8a, #ff85a1);
-    color: white;
-    box-shadow: 0 10px 20px rgba(255,92,138,0.45);
-  }
-
-  #noBtn {
-    background: #eee;
-    color: #444;
-    position: fixed;
-    pointer-events: none;
-    transition: transform 0.5s cubic-bezier(.2,.9,.3,1),
-                left 0.5s cubic-bezier(.2,.9,.3,1),
-                top 0.5s cubic-bezier(.2,.9,.3,1);
-  }
-
-  /* YES SCREEN */
-.yes-screen {
-  position: fixed;
-  inset: 0;
-  background: url("https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif") center / cover no-repeat;
-  display: none;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-}
-
-.yes-screen h2 {
-  font-size: 3rem;
-  color: white;
-  text-shadow: 0 5px 15px rgba(0,0,0,0.5);
-}
-</style>
+        .baby-bg {
+            width: 250px;
+            border-radius: 20px;
+            margin-top: 20px;
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="hero" id="main">
-  <h1>Sweety,so you gonna-wanna be my Valentine? 🚣‍♀️❤️</h1>
-  <p>Just thought I’d ask, nothing serious 🙂</p>
-
-  <div class="buttons">
-    <button id="yes">Yes 💖</button>
-    <button id="no">No 🙃</button>
-  </div>
-
-  <!-- ROWING ANIMATION -->
-  <div class="rowing-scene">
-    <div class="boat">
-      <span>🚣‍♀️💖</span>
+    <div id="main-content">
+        <div class="rowing-container">
+            <div class="boat">🚣‍♀️</div>
+        </div>
+        <h1>Erging is hard.<br>Being my Valentine is easy.<br>Yes?</h1>
+        
+        <div class="btn-container">
+            <button id="yesBtn" onclick="showSuccess()">Yes!</button>
+            <button id="noBtn">No</button>
+        </div>
     </div>
-  </div>
-</div>
 
-<div class="yes-screen" id="yesScreen">
-  <h2>U d Best 🥹💘</h2>
-</div>
+    <div id="success-screen">
+        <h1 style="font-size: 3rem;">You d Best!</h1>
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGIwdm5sYXA0ZzR0eXpsYm9ueXNid3R4bmVxeXp0ZzRyeXpsYm9ueSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l41lVsYDBC0V69T68/giphy.gif" alt="Happy Baby" class="baby-bg">
+    </div>
 
-<script>
-const noBtn = document.getElementById("no");
-const yesBtn = document.getElementById("yes");
-const yesScreen = document.getElementById("yesScreen");
-const main = document.getElementById("main");
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
 
-/* NO button dodge (works on mobile too) */
-function dodge() {
-  const x = Math.random() * 220 - 110;
-  const y = Math.random() * 160 - 80;
-  noBtn.style.transform = `translate(${x}px, ${y}px)`;
-}
+        // Function to move the "No" button
+        function moveButton() {
+            const padding = 50;
+            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
 
-noBtn.addEventListener("mouseenter", dodge);
-noBtn.addEventListener("touchstart", dodge);
+            // Generate random position
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
 
-/* YES click */
-yesBtn.addEventListener("click", () => {
-  main.style.display = "none";
-  yesScreen.style.display = "flex";
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+        }
 
-  for (let i = 0; i < 45; i++) {
-    setTimeout(createHeart, i * 90);
-  }
-});
+        // Trigger on both hover (desktop) and touch start (mobile)
+        noBtn.addEventListener('mouseenter', moveButton);
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault(); // Prevents accidental clicking
+            moveButton();
+        });
 
-function createHeart() {
-  const heart = document.createElement("div");
-  heart.className = "heart";
-  heart.innerHTML = "❤️";
-  heart.style.left = Math.random() * 100 + "vw";
-  heart.style.fontSize = Math.random() * 20 + 18 + "px";
-  document.body.appendChild(heart);
+        function showSuccess() {
+            document.getElementById('main-content').style.display = 'none';
+            document.getElementById('success-screen').style.display = 'flex';
+            
+            // Heart shower
+            setInterval(createHeart, 150);
+        }
 
-  setTimeout(() => heart.remove(), 3500);
-}
-</script>
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
+            document.body.appendChild(heart);
 
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+    </script>
 </body>
 </html>
