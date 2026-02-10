@@ -14,86 +14,86 @@
             justify-content: center;
             height: 100vh;
             background-color: #ffe0e9;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
             overflow: hidden;
             text-align: center;
         }
 
         /* Improved Rowing Animation */
-        .water {
+        .river {
             width: 100%;
-            height: 120px;
+            height: 100px;
             position: relative;
-            border-bottom: 4px solid #5dade2;
-            margin-bottom: 30px;
-            background: rgba(93, 173, 226, 0.1);
+            background: linear-gradient(transparent, rgba(0, 150, 255, 0.1));
+            border-bottom: 3px solid #0096ff;
+            margin-bottom: 20px;
+            overflow: hidden;
         }
 
-        .boat-wrapper {
+        .rower-box {
             position: absolute;
             bottom: 5px;
             left: -100px;
-            animation: move-boat 8s linear infinite;
+            animation: travel 6s linear infinite;
         }
 
-        .boat {
+        .boat-emoji {
             font-size: 60px;
             display: inline-block;
-            animation: rocking 1.5s ease-in-out infinite;
+            animation: stroke 1s ease-in-out infinite;
         }
 
-        @keyframes move-boat {
+        @keyframes travel {
             0% { left: -100px; }
             100% { left: 110%; }
         }
 
-        @keyframes rocking {
+        @keyframes stroke {
             0%, 100% { transform: rotate(-5deg) translateY(0); }
-            50% { transform: rotate(8deg) translateY(-15px); }
+            50% { transform: rotate(10deg) translateY(-10px); }
         }
 
-        h1 { color: #d63384; font-size: 1.8rem; padding: 0 20px; z-index: 5; }
+        h1 { color: #d63384; font-size: 1.6rem; margin: 20px; }
 
         /* Buttons Container */
-        .btn-container {
+        .btn-wrapper {
             display: flex;
             gap: 20px;
             justify-content: center;
             align-items: center;
             width: 100%;
-            height: 100px;
-            position: relative;
+            height: 80px;
         }
 
         button {
-            padding: 15px 35px;
+            padding: 15px 30px;
             font-size: 1.2rem;
             border: none;
             border-radius: 50px;
             cursor: pointer;
             font-weight: bold;
-            touch-action: none; /* Prevents mobile zooming on fast taps */
+            touch-action: none;
         }
 
-        #yesBtn { background-color: #ff4d6d; color: white; z-index: 10; }
+        #yesBtn { background-color: #ff4d6d; color: white; z-index: 5; }
 
-        /* Initial state is static next to Yes */
+        /* The No Button - Starts inline */
         #noBtn { 
             background-color: #adb5bd; 
             color: white; 
-            position: relative; 
-            z-index: 11;
+            transition: 0.15s ease;
+            z-index: 10;
         }
 
-        /* Success Screen Overlay */
+        /* Success Screen */
         #success-screen {
-            display: none; 
+            display: none;
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: #ffffff;
+            background-color: white;
             z-index: 9999;
             flex-direction: column;
             align-items: center;
@@ -104,83 +104,76 @@
             position: fixed;
             top: -50px;
             z-index: 10000;
-            font-size: 24px;
-            animation: fall linear forwards;
+            font-size: 30px;
+            pointer-events: none;
+            animation: falling linear forwards;
         }
 
-        @keyframes fall {
-            to { transform: translateY(110vh); }
+        @keyframes falling {
+            to { transform: translateY(110vh) rotate(360deg); }
         }
 
         #babyGif {
-            width: 80%;
-            max-width: 300px;
+            width: 250px;
             border-radius: 15px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
             margin-top: 20px;
+            border: 5px solid #ff4d6d;
         }
     </style>
 </head>
 <body>
 
     <div id="main-content">
-        <div class="water">
-            <div class="boat-wrapper">
-                <span class="boat">🚣‍♀️</span>
+        <div class="river">
+            <div class="rower-box">
+                <span class="boat-emoji">🚣‍♀️</span>
             </div>
         </div>
         <h1>Erging is hard.<br>Being my Valentine is easy.<br>Yes?</h1>
         
-        <div class="btn-container" id="btnWrapper">
+        <div class="btn-wrapper">
             <button id="yesBtn" onclick="showSuccess()">Yes!</button>
             <button id="noBtn">No</button>
         </div>
     </div>
 
     <div id="success-screen">
-        <h1 style="font-size: 3rem; color: #ff4d6d; margin-bottom: 10px;">You d Best!</h1>
-        <img id="babyGif" src="https://media3.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGIwdm5sYXA0ZzR0eXpsYm9ueXNid3R4bmVxeXp0ZzRyeXpsYm9ueSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l41lVsYDBC0V69T68/giphy.gif" alt="Happy Baby">
+        <h1 style="font-size: 3.5rem; color: #ff4d6d; margin: 0;">You d Best!</h1>
+        <img id="babyGif" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGIwdm5sYXA0ZzR0eXpsYm9ueXNid3R4bmVxeXp0ZzRyeXpsYm9ueSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l41lVsYDBC0V69T68/giphy.gif" alt="Happy Baby">
     </div>
 
     <script>
         const noBtn = document.getElementById('noBtn');
-        let hasMoved = false;
+        let moved = false;
 
-        function moveButton(e) {
-            // Change position to absolute only after first interaction
-            if (!hasMoved) {
+        function escape() {
+            // Once touched/hovered, it becomes absolute and moves
+            if (!moved) {
                 noBtn.style.position = 'fixed';
-                hasMoved = true;
+                moved = true;
             }
-
-            const padding = 60;
-            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
-            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
-
-            const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
-            const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
-
-            noBtn.style.left = randomX + 'px';
-            noBtn.style.top = randomY + 'px';
+            
+            // Boundary math
+            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
+            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
+            
+            noBtn.style.left = x + 'px';
+            noBtn.style.top = y + 'px';
         }
 
-        // Desktop hover
-        noBtn.addEventListener('mouseover', moveButton);
-        
-        // Mobile touch - triggers "move" instead of "click"
+        // Desktop and Mobile triggers
+        noBtn.addEventListener('mouseover', escape);
         noBtn.addEventListener('touchstart', (e) => {
             e.preventDefault();
-            moveButton();
+            escape();
         });
 
         function showSuccess() {
-            // Hide main, show success
             document.getElementById('main-content').style.display = 'none';
-            const success = document.getElementById('success-screen');
-            success.style.display = 'flex';
+            document.getElementById('success-screen').style.display = 'flex';
             
-            // Start heart shower
-            setInterval(createHeart, 150);
+            // Shower of hearts
+            setInterval(createHeart, 200);
         }
 
         function createHeart() {
@@ -191,7 +184,6 @@
             heart.style.animationDuration = (Math.random() * 2 + 2) + 's';
             document.body.appendChild(heart);
             
-            // Clean up hearts
             setTimeout(() => { heart.remove(); }, 4000);
         }
     </script>
