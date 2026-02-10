@@ -14,55 +14,49 @@
             justify-content: center;
             height: 100vh;
             background-color: #ffe0e9;
-            font-family: 'Comic Sans MS', cursive, sans-serif;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             overflow: hidden;
             text-align: center;
         }
 
-        /* Improved Rowing Animation */
-        .river {
+        h1 {
+            color: #d63384;
+            font-size: 2rem;
+            margin-bottom: 20px;
+            padding: 0 10px;
+        }
+
+        /* Rowing Animation */
+        .rowing-container {
             width: 100%;
             height: 100px;
             position: relative;
-            background: linear-gradient(transparent, rgba(0, 150, 255, 0.1));
-            border-bottom: 3px solid #0096ff;
-            margin-bottom: 20px;
-            overflow: hidden;
+            margin-bottom: 30px;
         }
 
-        .rower-box {
+        .boat {
+            font-size: 50px;
             position: absolute;
-            bottom: 5px;
             left: -100px;
-            animation: travel 6s linear infinite;
+            animation: row 6s linear infinite;
         }
 
-        .boat-emoji {
-            font-size: 60px;
-            display: inline-block;
-            animation: stroke 1s ease-in-out infinite;
+        @keyframes row {
+            0% { left: -100px; transform: translateY(0); }
+            25% { transform: translateY(-10px) rotate(-5deg); }
+            50% { transform: translateY(0) rotate(0); }
+            75% { transform: translateY(-10px) rotate(-5deg); }
+            100% { left: 100%; transform: translateY(0); }
         }
 
-        @keyframes travel {
-            0% { left: -100px; }
-            100% { left: 110%; }
-        }
-
-        @keyframes stroke {
-            0%, 100% { transform: rotate(-5deg) translateY(0); }
-            50% { transform: rotate(10deg) translateY(-10px); }
-        }
-
-        h1 { color: #d63384; font-size: 1.6rem; margin: 20px; }
-
-        /* Buttons Container */
-        .btn-wrapper {
+        /* Buttons */
+        .btn-container {
             display: flex;
             gap: 20px;
-            justify-content: center;
-            align-items: center;
+            position: relative;
             width: 100%;
-            height: 80px;
+            justify-content: center;
+            height: 60px;
         }
 
         button {
@@ -71,21 +65,23 @@
             border: none;
             border-radius: 50px;
             cursor: pointer;
+            transition: transform 0.2s;
             font-weight: bold;
-            touch-action: none;
         }
 
-        #yesBtn { background-color: #ff4d6d; color: white; z-index: 5; }
-
-        /* The No Button - Starts inline */
-        #noBtn { 
-            background-color: #adb5bd; 
-            color: white; 
-            transition: 0.15s ease;
+        #yesBtn {
+            background-color: #ff4d6d;
+            color: white;
             z-index: 10;
         }
 
-        /* Success Screen */
+        #noBtn {
+            background-color: #adb5bd;
+            color: white;
+            position: absolute;
+        }
+
+        /* Success State */
         #success-screen {
             display: none;
             position: fixed;
@@ -94,7 +90,7 @@
             width: 100%;
             height: 100%;
             background-color: white;
-            z-index: 9999;
+            z-index: 100;
             flex-direction: column;
             align-items: center;
             justify-content: center;
@@ -102,78 +98,73 @@
 
         .heart {
             position: fixed;
-            top: -50px;
-            z-index: 10000;
-            font-size: 30px;
-            pointer-events: none;
-            animation: falling linear forwards;
+            top: -10%;
+            font-size: 24px;
+            user-select: none;
+            animation: fall linear forwards;
         }
 
-        @keyframes falling {
-            to { transform: translateY(110vh) rotate(360deg); }
+        @keyframes fall {
+            to { transform: translateY(110vh); }
         }
 
-        #babyGif {
+        .baby-bg {
             width: 250px;
-            border-radius: 15px;
+            border-radius: 20px;
             margin-top: 20px;
-            border: 5px solid #ff4d6d;
         }
     </style>
 </head>
 <body>
 
     <div id="main-content">
-        <div class="river">
-            <div class="rower-box">
-                <span class="boat-emoji">🚣‍♀️</span>
-            </div>
+        <div class="rowing-container">
+            <div class="boat">🚣‍♀️</div>
         </div>
         <h1>Erging is hard.<br>Being my Valentine is easy.<br>Yes?</h1>
         
-        <div class="btn-wrapper">
+        <div class="btn-container">
             <button id="yesBtn" onclick="showSuccess()">Yes!</button>
             <button id="noBtn">No</button>
         </div>
     </div>
 
     <div id="success-screen">
-        <h1 style="font-size: 3.5rem; color: #ff4d6d; margin: 0;">You d Best!</h1>
-        <img id="babyGif" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGIwdm5sYXA0ZzR0eXpsYm9ueXNid3R4bmVxeXp0ZzRyeXpsYm9ueSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l41lVsYDBC0V69T68/giphy.gif" alt="Happy Baby">
+        <h1 style="font-size: 3rem;">You d Best!</h1>
+        <img src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNGIwdm5sYXA0ZzR0eXpsYm9ueXNid3R4bmVxeXp0ZzRyeXpsYm9ueSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l41lVsYDBC0V69T68/giphy.gif" alt="Happy Baby" class="baby-bg">
     </div>
 
     <script>
         const noBtn = document.getElementById('noBtn');
-        let moved = false;
+        const yesBtn = document.getElementById('yesBtn');
 
-        function escape() {
-            // Once touched/hovered, it becomes absolute and moves
-            if (!moved) {
-                noBtn.style.position = 'fixed';
-                moved = true;
-            }
-            
-            // Boundary math
-            const x = Math.random() * (window.innerWidth - noBtn.offsetWidth);
-            const y = Math.random() * (window.innerHeight - noBtn.offsetHeight);
-            
-            noBtn.style.left = x + 'px';
-            noBtn.style.top = y + 'px';
+        // Function to move the "No" button
+        function moveButton() {
+            const padding = 50;
+            const maxX = window.innerWidth - noBtn.offsetWidth - padding;
+            const maxY = window.innerHeight - noBtn.offsetHeight - padding;
+
+            // Generate random position
+            const randomX = Math.floor(Math.random() * maxX);
+            const randomY = Math.floor(Math.random() * maxY);
+
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
         }
 
-        // Desktop and Mobile triggers
-        noBtn.addEventListener('mouseover', escape);
+        // Trigger on both hover (desktop) and touch start (mobile)
+        noBtn.addEventListener('mouseenter', moveButton);
         noBtn.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            escape();
+            e.preventDefault(); // Prevents accidental clicking
+            moveButton();
         });
 
         function showSuccess() {
             document.getElementById('main-content').style.display = 'none';
             document.getElementById('success-screen').style.display = 'flex';
             
-            // Shower of hearts
-            setInterval(createHeart, 200);
+            // Heart shower
+            setInterval(createHeart, 150);
         }
 
         function createHeart() {
@@ -181,10 +172,12 @@
             heart.classList.add('heart');
             heart.innerHTML = '❤️';
             heart.style.left = Math.random() * 100 + 'vw';
-            heart.style.animationDuration = (Math.random() * 2 + 2) + 's';
+            heart.style.animationDuration = (Math.random() * 2 + 3) + 's';
             document.body.appendChild(heart);
-            
-            setTimeout(() => { heart.remove(); }, 4000);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
         }
     </script>
 </body>
