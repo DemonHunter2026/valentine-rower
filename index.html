@@ -4,144 +4,143 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+<!-- TEXT: Browser tab title -->
 <title>Just Curious 🙂</title>
 
 <style>
-  * { box-sizing: border-box; }
+* { box-sizing: border-box; }
 
-  body {
-    margin: 0;
-    height: 100vh;
-    background: linear-gradient(to bottom, #c9e9f7 0%, #fdfbfb 70%);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-    overflow: hidden;
-  }
+body {
+  margin: 0;
+  height: 100vh;
+  background: linear-gradient(to bottom, #c9e9f7 0%, #fdfbfb 70%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  overflow: hidden;
+}
 
-  .card {
-    width: 92%;
-    max-width: 360px;
-    background: white;
-    padding: 26px;
-    border-radius: 26px;
-    text-align: center;
-    box-shadow: 0 25px 45px rgba(0,0,0,0.15);
-    animation: rise 0.9s cubic-bezier(.2,.8,.2,1);
-    position: relative;
-  }
+.card {
+  width: 92%;
+  max-width: 360px;
+  background: white;
+  padding: 26px;
+  border-radius: 26px;
+  text-align: center;
+  box-shadow: 0 25px 45px rgba(0,0,0,0.15);
+  animation: rise 0.9s cubic-bezier(.2,.8,.2,1);
+  position: relative;
+}
 
-  @keyframes rise {
-    from { opacity: 0; transform: translateY(50px) scale(0.96); }
-    to   { opacity: 1; transform: translateY(0) scale(1); }
-  }
+@keyframes rise {
+  from { opacity: 0; transform: translateY(50px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
 
-  h1 {
-    font-size: 22px;
-    color: #ff5c8a;
-    margin-bottom: 6px;
-  }
+h1 {
+  font-size: 22px;
+  color: #ff5c8a;
+  margin-bottom: 6px;
+}
 
-  p {
-    font-size: 14px;
-    color: #666;
-    margin-bottom: 18px;
-  }
+p {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 18px;
+}
 
-  .buttons {
-    display: flex;
-    justify-content: center;
-    gap: 16px;
-  }
+/* BUTTONS */
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+}
 
-  button {
-    padding: 13px 24px;
-    border-radius: 999px;
-    border: none;
-    font-size: 15px;
-  }
+button {
+  padding: 13px 24px;
+  border-radius: 999px;
+  border: none;
+  font-size: 15px;
+}
 
-  #yes {
-    background: linear-gradient(135deg, #ff5c8a, #ff85a1);
-    color: white;
-    box-shadow: 0 10px 20px rgba(255,92,138,0.45);
-  }
+#yes {
+  background: linear-gradient(135deg, #ff5c8a, #ff85a1);
+  color: white;
+  box-shadow: 0 10px 20px rgba(255,92,138,0.45);
+}
 
-  #no {
-    background: #eee;
-    color: #444;
-    position: fixed;
-    pointer-events: none;
-    transition: transform 0.9s cubic-bezier(.2,.8,.3,1);
-  }
+#no {
+  background: #eee;
+  color: #444;
+  position: fixed;
+  pointer-events: none;
+  /* Slower + softer movement */
+  transition: transform 1.1s cubic-bezier(.2,.8,.3,1);
+}
 
-  .rowing-scene {
-    position: relative;
-    height: 120px;
-    margin-top: 20px;
-  }
+/* YES SCREEN */
+.yes-screen {
+  position: fixed;
+  inset: 0;
+  background: url("https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif") center / cover no-repeat;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
 
-  .boat {
-    animation: bob 2s ease-in-out infinite;
-    font-size: 28px;
-  }
+.yes-screen h2 {
+  font-size: 3rem;
+  color: white;
+  text-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
 
-  @keyframes bob {
-    0%,100% { transform: translateY(0); }
-    50% { transform: translateY(-8px); }
-  }
+/* HEARTS */
+.heart {
+  position: fixed;
+  top: -10px;
+  animation: fall 3.5s linear forwards;
+}
 
-  .yes-screen {
-    position: fixed;
-    inset: 0;
-    background: url("https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif") center / cover no-repeat;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
+@keyframes fall {
+  to {
+    transform: translateY(110vh);
+    opacity: 0;
   }
-
-  .yes-screen h2 {
-    font-size: 3rem;
-    color: white;
-    text-shadow: 0 5px 15px rgba(0,0,0,0.5);
-  }
-
-  .heart {
-    position: fixed;
-    top: -10px;
-    animation: fall 3.5s linear forwards;
-  }
-
-  @keyframes fall {
-    to {
-      transform: translateY(110vh);
-      opacity: 0;
-    }
-  }
+}
 </style>
 </head>
 
 <body>
 
-<!-- FIXED: card instead of hero -->
-<div class="card" id="main">
+<div class="hero" id="main">
 
+  <!-- TEXT: Main question -->
   <h1>Sweety,so you gonna-wanna be my Valentine? 🚣‍♀️❤️</h1>
+
+  <!-- TEXT: Subtext -->
   <p>Just thought I’d ask, nothing serious 🙂</p>
 
   <div class="buttons">
+    <!-- TEXT: Yes button -->
     <button id="yes">Yes 💖</button>
+
+    <!-- TEXT: No button -->
     <button id="no">No 🙃</button>
   </div>
 
+  <!-- ROWING ANIMATION (unchanged) -->
   <div class="rowing-scene">
-    <div class="boat">🚣‍♀️💖</div>
+    <div class="boat">
+      <!-- TEXT: Boat emoji -->
+      <span>🚣‍♀️💖</span>
+    </div>
   </div>
 </div>
 
 <div class="yes-screen" id="yesScreen">
+  <!-- TEXT: Yes screen message -->
   <h2>You d Best! 🥹💘</h2>
 </div>
 
@@ -151,19 +150,22 @@ const yesBtn = document.getElementById("yes");
 const yesScreen = document.getElementById("yesScreen");
 const main = document.getElementById("main");
 
+/* NO button dodge — slowed down, less aggressive */
 function dodge() {
-  const x = Math.random() * 140 - 70;
-  const y = Math.random() * 100 - 50;
+  const x = Math.random() * 120 - 60;
+  const y = Math.random() * 90 - 45;
   noBtn.style.transform = `translate(${x}px, ${y}px)`;
 }
 
 noBtn.addEventListener("mouseenter", dodge);
 noBtn.addEventListener("touchstart", dodge);
 
+/* YES click */
 yesBtn.addEventListener("click", () => {
   main.style.display = "none";
   yesScreen.style.display = "flex";
 
+  /* More hearts shower */
   for (let i = 0; i < 120; i++) {
     setTimeout(createHeart, i * 40);
   }
@@ -172,10 +174,14 @@ yesBtn.addEventListener("click", () => {
 function createHeart() {
   const heart = document.createElement("div");
   heart.className = "heart";
+
+  /* TEXT: Heart emoji */
   heart.innerHTML = "❤️";
+
   heart.style.left = Math.random() * 100 + "vw";
   heart.style.fontSize = Math.random() * 22 + 18 + "px";
   document.body.appendChild(heart);
+
   setTimeout(() => heart.remove(), 3500);
 }
 </script>
