@@ -3,83 +3,163 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-<!-- TEXT: Browser tab title -->
 <title>Just Curious 🙂</title>
 
 <style>
-* { box-sizing: border-box; }
+  * { box-sizing: border-box; }
 
-body {
-  margin: 0;
-  height: 100vh;
-  background: linear-gradient(to bottom, #c9e9f7 0%, #fdfbfb 70%);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  overflow: hidden;
-}
+  body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(to bottom, #c9e9f7 0%, #fdfbfb 70%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    overflow: hidden;
+  }
 
-.card {
-  width: 92%;
-  max-width: 360px;
-  background: white;
-  padding: 26px;
-  border-radius: 26px;
-  text-align: center;
-  box-shadow: 0 25px 45px rgba(0,0,0,0.15);
-  animation: rise 0.9s cubic-bezier(.2,.8,.2,1);
-  position: relative;
-}
+  .card {
+    width: 92%;
+    max-width: 360px;
+    background: white;
+    padding: 26px;
+    border-radius: 26px;
+    text-align: center;
+    box-shadow: 0 25px 45px rgba(0,0,0,0.15);
+    animation: rise 0.9s cubic-bezier(.2,.8,.2,1);
+    position: relative;
+  }
 
-@keyframes rise {
-  from { opacity: 0; transform: translateY(50px) scale(0.96); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(50px) scale(0.96); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
 
-h1 {
-  font-size: 22px;
-  color: #ff5c8a;
-  margin-bottom: 6px;
-}
+  h1 {
+    font-size: 22px;
+    color: #ff5c8a;
+    margin-bottom: 6px;
+  }
 
-p {
-  font-size: 14px;
-  color: #666;
-  margin-bottom: 18px;
-}
+  p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 18px;
+  }
 
-/* BUTTONS */
-.buttons {
-  display: flex;
-  justify-content: center;
-  gap: 16px;
-}
+  /* ROWING SCENE */
+  .scene {
+    position: relative;
+    height: 150px;
+    margin-bottom: 22px;
+    overflow: hidden;
+  }
 
-button {
-  padding: 13px 24px;
-  border-radius: 999px;
-  border: none;
-  font-size: 15px;
-}
+  .water {
+    position: absolute;
+    bottom: 0;
+    width: 200%;
+    height: 55px;
+    background: linear-gradient(to right, #b3e6f5, #d9f4fb);
+    animation: waterMove 6s linear infinite;
+  }
 
-#yes {
-  background: linear-gradient(135deg, #ff5c8a, #ff85a1);
-  color: white;
-  box-shadow: 0 10px 20px rgba(255,92,138,0.45);
-}
+  @keyframes waterMove {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
 
-#no {
-  background: #eee;
-  color: #444;
-  position: fixed;
-  pointer-events: none;
-  /* Slower + softer movement */
-  transition: transform 1.1s cubic-bezier(.2,.8,.3,1);
-}
+  .boat {
+    position: absolute;
+    bottom: 42px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 140px;
+    height: 22px;
+    background: #ff85a1;
+    border-radius: 0 0 24px 24px;
+    animation: boatBob 2.4s ease-in-out infinite;
+  }
 
-/* YES SCREEN */
+  @keyframes boatBob {
+    0%,100% { transform: translate(-50%, 0); }
+    50% { transform: translate(-50%, -8px); }
+  }
+
+  .rower {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 28px;
+  }
+
+  .oar {
+    position: absolute;
+    width: 70px;
+    height: 4px;
+    background: #555;
+    top: 12px;
+  }
+
+  .oar.left {
+    left: -48px;
+    transform-origin: right center;
+    animation: strokeLeft 1.6s cubic-bezier(.4,.0,.6,1) infinite;
+  }
+
+  .oar.right {
+    right: -48px;
+    transform-origin: left center;
+    animation: strokeRight 1.6s cubic-bezier(.4,.0,.6,1) infinite;
+  }
+
+  @keyframes strokeLeft {
+    0%   { transform: rotate(40deg); }
+    35%  { transform: rotate(-20deg); }
+    60%  { transform: rotate(-20deg); }
+    100% { transform: rotate(40deg); }
+  }
+
+  @keyframes strokeRight {
+    0%   { transform: rotate(-40deg); }
+    35%  { transform: rotate(20deg); }
+    60%  { transform: rotate(20deg); }
+    100% { transform: rotate(-40deg); }
+  }
+
+  /* BUTTONS */
+  .btn-row {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  button {
+    padding: 13px 24px;
+    border-radius: 999px;
+    border: none;
+    font-size: 15px;
+  }
+
+  #yesBtn {
+    background: linear-gradient(135deg, #ff5c8a, #ff85a1);
+    color: white;
+    box-shadow: 0 10px 20px rgba(255,92,138,0.45);
+  }
+
+  #noBtn {
+    background: #eee;
+    color: #444;
+    position: fixed;
+    pointer-events: none;
+    transition: transform 0.5s cubic-bezier(.2,.9,.3,1),
+                left 0.5s cubic-bezier(.2,.9,.3,1),
+                top 0.5s cubic-bezier(.2,.9,.3,1);
+  }
+
+  /* YES SCREEN */
 .yes-screen {
   position: fixed;
   inset: 0;
@@ -95,53 +175,30 @@ button {
   color: white;
   text-shadow: 0 5px 15px rgba(0,0,0,0.5);
 }
-
-/* HEARTS */
-.heart {
-  position: fixed;
-  top: -10px;
-  animation: fall 3.5s linear forwards;
-}
-
-@keyframes fall {
-  to {
-    transform: translateY(110vh);
-    opacity: 0;
-  }
-}
 </style>
 </head>
 
 <body>
 
 <div class="hero" id="main">
-
-  <!-- TEXT: Main question -->
   <h1>Sweety,so you gonna-wanna be my Valentine? 🚣‍♀️❤️</h1>
-
-  <!-- TEXT: Subtext -->
   <p>Just thought I’d ask, nothing serious 🙂</p>
 
   <div class="buttons">
-    <!-- TEXT: Yes button -->
     <button id="yes">Yes 💖</button>
-
-    <!-- TEXT: No button -->
     <button id="no">No 🙃</button>
   </div>
 
-  <!-- ROWING ANIMATION (unchanged) -->
+  <!-- ROWING ANIMATION -->
   <div class="rowing-scene">
     <div class="boat">
-      <!-- TEXT: Boat emoji -->
       <span>🚣‍♀️💖</span>
     </div>
   </div>
 </div>
 
 <div class="yes-screen" id="yesScreen">
-  <!-- TEXT: Yes screen message -->
-  <h2>You d Best! 🥹💘</h2>
+  <h2>U d Best 🥹💘</h2>
 </div>
 
 <script>
@@ -150,10 +207,10 @@ const yesBtn = document.getElementById("yes");
 const yesScreen = document.getElementById("yesScreen");
 const main = document.getElementById("main");
 
-/* NO button dodge — slowed down, less aggressive */
+/* NO button dodge (works on mobile too) */
 function dodge() {
-  const x = Math.random() * 120 - 60;
-  const y = Math.random() * 90 - 45;
+  const x = Math.random() * 220 - 110;
+  const y = Math.random() * 160 - 80;
   noBtn.style.transform = `translate(${x}px, ${y}px)`;
 }
 
@@ -165,21 +222,17 @@ yesBtn.addEventListener("click", () => {
   main.style.display = "none";
   yesScreen.style.display = "flex";
 
-  /* More hearts shower */
-  for (let i = 0; i < 120; i++) {
-    setTimeout(createHeart, i * 40);
+  for (let i = 0; i < 45; i++) {
+    setTimeout(createHeart, i * 90);
   }
 });
 
 function createHeart() {
   const heart = document.createElement("div");
   heart.className = "heart";
-
-  /* TEXT: Heart emoji */
   heart.innerHTML = "❤️";
-
   heart.style.left = Math.random() * 100 + "vw";
-  heart.style.fontSize = Math.random() * 22 + 18 + "px";
+  heart.style.fontSize = Math.random() * 20 + 18 + "px";
   document.body.appendChild(heart);
 
   setTimeout(() => heart.remove(), 3500);
