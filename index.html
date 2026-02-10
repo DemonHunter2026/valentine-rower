@@ -4,7 +4,6 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<!-- TEXT: Browser tab title -->
 <title>Just Curious 🙂</title>
 
 <style>
@@ -50,54 +49,6 @@
     margin-bottom: 18px;
   }
 
-  /* ROWING SCENE */
-  .scene {
-    position: relative;
-    height: 150px;
-    margin-bottom: 22px;
-    overflow: hidden;
-  }
-
-  .water {
-    position: absolute;
-    bottom: 0;
-    width: 200%;
-    height: 55px;
-    background: linear-gradient(to right, #b3e6f5, #d9f4fb);
-    animation: waterMove 6s linear infinite;
-  }
-
-  @keyframes waterMove {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
-  }
-
-  .boat {
-    position: absolute;
-    bottom: 42px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 140px;
-    height: 22px;
-    background: #ff85a1;
-    border-radius: 0 0 24px 24px;
-    animation: boatBob 2.4s ease-in-out infinite;
-  }
-
-  @keyframes boatBob {
-    0%,100% { transform: translate(-50%, 0); }
-    50% { transform: translate(-50%, -8px); }
-  }
-
-  .rower {
-    position: absolute;
-    top: -30px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-size: 28px;
-  }
-
-  /* BUTTONS */
   .buttons {
     display: flex;
     justify-content: center;
@@ -122,11 +73,25 @@
     color: #444;
     position: fixed;
     pointer-events: none;
-    /* Slower + smoother movement */
     transition: transform 0.9s cubic-bezier(.2,.8,.3,1);
   }
 
-  /* YES SCREEN */
+  .rowing-scene {
+    position: relative;
+    height: 120px;
+    margin-top: 20px;
+  }
+
+  .boat {
+    animation: bob 2s ease-in-out infinite;
+    font-size: 28px;
+  }
+
+  @keyframes bob {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-8px); }
+  }
+
   .yes-screen {
     position: fixed;
     inset: 0;
@@ -160,33 +125,23 @@
 
 <body>
 
-<div class="hero" id="main">
+<!-- FIXED: card instead of hero -->
+<div class="card" id="main">
 
-  <!-- TEXT: Main question -->
   <h1>Sweety,so you gonna-wanna be my Valentine? 🚣‍♀️❤️</h1>
-
-  <!-- TEXT: Subtext -->
   <p>Just thought I’d ask, nothing serious 🙂</p>
 
   <div class="buttons">
-    <!-- TEXT: Yes button -->
     <button id="yes">Yes 💖</button>
-
-    <!-- TEXT: No button -->
     <button id="no">No 🙃</button>
   </div>
 
-  <!-- ROWING ANIMATION -->
   <div class="rowing-scene">
-    <div class="boat">
-      <!-- TEXT: Boat emoji -->
-      <span>🚣‍♀️💖</span>
-    </div>
+    <div class="boat">🚣‍♀️💖</div>
   </div>
 </div>
 
 <div class="yes-screen" id="yesScreen">
-  <!-- TEXT: Yes screen message -->
   <h2>You d Best! 🥹💘</h2>
 </div>
 
@@ -196,7 +151,6 @@ const yesBtn = document.getElementById("yes");
 const yesScreen = document.getElementById("yesScreen");
 const main = document.getElementById("main");
 
-/* NO button dodge — slowed down & less aggressive */
 function dodge() {
   const x = Math.random() * 140 - 70;
   const y = Math.random() * 100 - 50;
@@ -206,12 +160,10 @@ function dodge() {
 noBtn.addEventListener("mouseenter", dodge);
 noBtn.addEventListener("touchstart", dodge);
 
-/* YES click */
 yesBtn.addEventListener("click", () => {
   main.style.display = "none";
   yesScreen.style.display = "flex";
 
-  /* More hearts */
   for (let i = 0; i < 120; i++) {
     setTimeout(createHeart, i * 40);
   }
@@ -220,14 +172,10 @@ yesBtn.addEventListener("click", () => {
 function createHeart() {
   const heart = document.createElement("div");
   heart.className = "heart";
-
-  /* TEXT: Heart emoji */
   heart.innerHTML = "❤️";
-
   heart.style.left = Math.random() * 100 + "vw";
   heart.style.fontSize = Math.random() * 22 + 18 + "px";
   document.body.appendChild(heart);
-
   setTimeout(() => heart.remove(), 3500);
 }
 </script>
