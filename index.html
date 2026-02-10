@@ -20,10 +20,10 @@ html, body {
 }
 
 body {
-  background: linear-gradient(135deg, #ffdee9, #b5fffc);
+  background: linear-gradient(to top, #b5fffc 0%, #ffdee9 100%);
 }
 
-/* FULL SCREEN HERO */
+/* MAIN SCREEN */
 .hero {
   position: relative;
   height: 100vh;
@@ -35,22 +35,40 @@ body {
   text-align: center;
 }
 
-/* ROWING ANIMATION */
-.rower {
+/* CUTE ROWING ANIMATION */
+.rowing-scene {
   position: absolute;
-  bottom: 6%;
-  width: 320px;
-  max-width: 70vw;
-  animation: row 2.2s ease-in-out infinite;
-  z-index: 1;
+  bottom: 10%;
+  width: 100%;
+  height: 120px;
+  overflow: hidden;
 }
 
-@keyframes row {
-  0% { transform: translateX(-12px); }
-  50% { transform: translateX(12px); }
-  100% { transform: translateX(-12px); }
+.boat {
+  position: absolute;
+  left: -200px;
+  font-size: 3rem;
+  animation: rowAcross 8s linear infinite;
 }
 
+/* little bob for realism */
+.boat span {
+  display: inline-block;
+  animation: bob 1.6s ease-in-out infinite;
+}
+
+@keyframes rowAcross {
+  0% { left: -200px; }
+  100% { left: 110%; }
+}
+
+@keyframes bob {
+  0% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
+}
+
+/* TEXT */
 h1 {
   font-size: 2.2rem;
   margin-bottom: 12px;
@@ -131,16 +149,16 @@ button {
   <h1>Sooo… do you wanna be my Valentine? 🚣‍♀️❤️</h1>
   <p>Just thought I’d ask — no pressure 🙂</p>
 
-  <!-- CARTOON ROWING ANIMATION -->
-  <img
-    src="https://media.giphy.com/media/l0MYC0LajbaPoEADu/giphy.gif"
-    alt="Rowing animation"
-    class="rower"
-  />
-
   <div class="buttons">
     <button id="yes">Yes 💖</button>
     <button id="no">No 🙃</button>
+  </div>
+
+  <!-- ROWING ANIMATION -->
+  <div class="rowing-scene">
+    <div class="boat">
+      <span>🚣‍♀️💖</span>
+    </div>
   </div>
 </div>
 
@@ -154,7 +172,7 @@ const yesBtn = document.getElementById("yes");
 const yesScreen = document.getElementById("yesScreen");
 const main = document.getElementById("main");
 
-/* NO button dodges (slightly more assertive, still playful) */
+/* NO button dodge (works on mobile too) */
 function dodge() {
   const x = Math.random() * 220 - 110;
   const y = Math.random() * 160 - 80;
