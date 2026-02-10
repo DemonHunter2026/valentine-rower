@@ -159,91 +159,84 @@
                 top 0.5s cubic-bezier(.2,.9,.3,1);
   }
 
-  /* HEARTS */
-  .heart {
-    position: fixed;
-    font-size: 18px;
-    pointer-events: none;
-    animation: floatUp 3.2s ease forwards;
-  }
+  /* YES SCREEN */
+.yes-screen {
+  position: fixed;
+  inset: 0;
+  background: url("https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif") center / cover no-repeat;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
 
-  @keyframes floatUp {
-    0% { opacity: 0; transform: translateY(10px) scale(0.7); }
-    15% { opacity: 1; }
-    100% { opacity: 0; transform: translateY(-160px) scale(1.5); }
-  }
+.yes-screen h2 {
+  font-size: 3rem;
+  color: white;
+  text-shadow: 0 5px 15px rgba(0,0,0,0.5);
+}
 </style>
 </head>
 
 <body>
 
-<div class="card">
-  <h1>Will you be my Valentine? 🚣‍♀️💗</h1>
-  <p>Just a smooth stroke… no pressure 😌</p>
+<div class="hero" id="main">
+  <h1>Sweety,so you gonna-wanna be my Valentine? 🚣‍♀️❤️</h1>
+  <p>Just thought I’d ask, nothing serious 🙂</p>
 
-  <div class="scene">
-    <div class="boat">
-      <div class="rower">🚣‍♀️</div>
-      <div class="oar left"></div>
-      <div class="oar right"></div>
-    </div>
-    <div class="water"></div>
+  <div class="buttons">
+    <button id="yes">Yes 💖</button>
+    <button id="no">No 🙃</button>
   </div>
 
-  <div class="btn-row">
-    <button id="yesBtn">Yes 💕</button>
-    <button id="noBtn">No 🙃</button>
+  <!-- ROWING ANIMATION -->
+  <div class="rowing-scene">
+    <div class="boat">
+      <span>🚣‍♀️💖</span>
+    </div>
   </div>
 </div>
 
+<div class="yes-screen" id="yesScreen">
+  <h2>U d Best 🥹💘</h2>
+</div>
+
 <script>
-  const noBtn = document.getElementById("noBtn");
-  const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("no");
+const yesBtn = document.getElementById("yes");
+const yesScreen = document.getElementById("yesScreen");
+const main = document.getElementById("main");
 
-  function rowAway() {
-    const pad = 20;
-    const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - pad);
-    const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - pad);
+/* NO button dodge (works on mobile too) */
+function dodge() {
+  const x = Math.random() * 220 - 110;
+  const y = Math.random() * 160 - 80;
+  noBtn.style.transform = `translate(${x}px, ${y}px)`;
+}
 
-    noBtn.style.left = `${x}px`;
-    noBtn.style.top = `${y}px`;
-    noBtn.style.transform = `rotate(${Math.random()*12-6}deg)`;
+noBtn.addEventListener("mouseenter", dodge);
+noBtn.addEventListener("touchstart", dodge);
+
+/* YES click */
+yesBtn.addEventListener("click", () => {
+  main.style.display = "none";
+  yesScreen.style.display = "flex";
+
+  for (let i = 0; i < 45; i++) {
+    setTimeout(createHeart, i * 90);
   }
+});
 
-  function heartPulse() {
-    const h = document.createElement("div");
-    h.className = "heart";
-    h.textContent = "💗";
-    h.style.left = Math.random() * window.innerWidth + "px";
-    h.style.top = window.innerHeight - 40 + "px";
-    document.body.appendChild(h);
-    setTimeout(() => h.remove(), 3200);
-  }
+function createHeart() {
+  const heart = document.createElement("div");
+  heart.className = "heart";
+  heart.innerHTML = "❤️";
+  heart.style.left = Math.random() * 100 + "vw";
+  heart.style.fontSize = Math.random() * 20 + 18 + "px";
+  document.body.appendChild(heart);
 
-  document.addEventListener("mousemove", rowAway);
-  document.addEventListener("touchstart", rowAway);
-  rowAway();
-
-  yesBtn.onclick = () => {
-    document.body.innerHTML = `
-      <div style="
-        height:100vh;
-        display:flex;
-        flex-direction:column;
-        justify-content:center;
-        align-items:center;
-        text-align:center;
-        background:linear-gradient(135deg,#ff5c8a,#ff9fb8);
-        color:white;
-        padding:20px;">
-        <h1 style="font-size:26px;">Nice catch at the finish 😄</h1>
-        <p style="font-size:16px;max-width:320px;">
-          How about a relaxed coffee or ice-cream?<br>
-          Zero erg tests involved ☕🍦
-        </p>
-      </div>`;
-    for (let i = 0; i < 16; i++) setTimeout(heartPulse, i * 120);
-  };
+  setTimeout(() => heart.remove(), 3500);
+}
 </script>
 
 </body>
