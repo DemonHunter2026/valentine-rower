@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Just Curious 🙂</title>
+
+<style>
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(to bottom, #c9e9f7 0%, #fdfbfb 70%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    overflow: hidden;
+  }
+
+  .card {
+    width: 92%;
+    max-width: 360px;
+    background: white;
+    padding: 26px;
+    border-radius: 26px;
+    text-align: center;
+    box-shadow: 0 25px 45px rgba(0,0,0,0.15);
+    animation: rise 0.9s cubic-bezier(.2,.8,.2,1);
+    position: relative;
+  }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(50px) scale(0.96); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
+  }
+
+  h1 {
+    font-size: 22px;
+    color: #ff5c8a;
+    margin-bottom: 6px;
+  }
+
+  p {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 18px;
+  }
+
+  /* ROWING SCENE */
+  .scene {
+    position: relative;
+    height: 150px;
+    margin-bottom: 22px;
+    overflow: hidden;
+  }
+
+  .water {
+    position: absolute;
+    bottom: 0;
+    width: 200%;
+    height: 55px;
+    background: linear-gradient(to right, #b3e6f5, #d9f4fb);
+    animation: waterMove 6s linear infinite;
+  }
+
+  @keyframes waterMove {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  .boat {
+    position: absolute;
+    bottom: 42px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 140px;
+    height: 22px;
+    background: #ff85a1;
+    border-radius: 0 0 24px 24px;
+    animation: boatBob 2.4s ease-in-out infinite;
+  }
+
+  @keyframes boatBob {
+    0%,100% { transform: translate(-50%, 0); }
+    50% { transform: translate(-50%, -8px); }
+  }
+
+  .rower {
+    position: absolute;
+    top: -30px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-size: 28px;
+  }
+
+  .oar {
+    position: absolute;
+    width: 70px;
+    height: 4px;
+    background: #555;
+    top: 12px;
+  }
+
+  .oar.left {
+    left: -48px;
+    transform-origin: right center;
+    animation: strokeLeft 1.6s cubic-bezier(.4,.0,.6,1) infinite;
+  }
+
+  .oar.right {
+    right: -48px;
+    transform-origin: left center;
+    animation: strokeRight 1.6s cubic-bezier(.4,.0,.6,1) infinite;
+  }
+
+  @keyframes strokeLeft {
+    0%   { transform: rotate(40deg); }
+    35%  { transform: rotate(-20deg); }
+    60%  { transform: rotate(-20deg); }
+    100% { transform: rotate(40deg); }
+  }
+
+  @keyframes strokeRight {
+    0%   { transform: rotate(-40deg); }
+    35%  { transform: rotate(20deg); }
+    60%  { transform: rotate(20deg); }
+    100% { transform: rotate(-40deg); }
+  }
+
+  /* BUTTONS */
+  .btn-row {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+  }
+
+  button {
+    padding: 13px 24px;
+    border-radius: 999px;
+    border: none;
+    font-size: 15px;
+  }
+
+  #yesBtn {
+    background: linear-gradient(135deg, #ff5c8a, #ff85a1);
+    color: white;
+    box-shadow: 0 10px 20px rgba(255,92,138,0.45);
+  }
+
+  #noBtn {
+    background: #eee;
+    color: #444;
+    position: fixed;
+    pointer-events: none;
+    transition: transform 0.5s cubic-bezier(.2,.9,.3,1),
+                left 0.5s cubic-bezier(.2,.9,.3,1),
+                top 0.5s cubic-bezier(.2,.9,.3,1);
+  }
+
+  /* HEARTS */
+  .heart {
+    position: fixed;
+    font-size: 18px;
+    pointer-events: none;
+    animation: floatUp 3.2s ease forwards;
+  }
+
+  @keyframes floatUp {
+    0% { opacity: 0; transform: translateY(10px) scale(0.7); }
+    15% { opacity: 1; }
+    100% { opacity: 0; transform: translateY(-160px) scale(1.5); }
+  }
+</style>
+</head>
+
+<body>
+
+<div class="card">
+  <h1>Will you be my Valentine? 🚣‍♀️💗</h1>
+  <p>Just a smooth stroke… no pressure 😌</p>
+
+  <div class="scene">
+    <div class="boat">
+      <div class="rower">🚣‍♀️</div>
+      <div class="oar left"></div>
+      <div class="oar right"></div>
+    </div>
+    <div class="water"></div>
+  </div>
+
+  <div class="btn-row">
+    <button id="yesBtn">Yes 💕</button>
+    <button id="noBtn">No 🙃</button>
+  </div>
+</div>
+
+<script>
+  const noBtn = document.getElementById("noBtn");
+  const yesBtn = document.getElementById("yesBtn");
+
+  function rowAway() {
+    const pad = 20;
+    const x = Math.random() * (window.innerWidth - noBtn.offsetWidth - pad);
+    const y = Math.random() * (window.innerHeight - noBtn.offsetHeight - pad);
+
+    noBtn.style.left = `${x}px`;
+    noBtn.style.top = `${y}px`;
+    noBtn.style.transform = `rotate(${Math.random()*12-6}deg)`;
+  }
+
+  function heartPulse() {
+    const h = document.createElement("div");
+    h.className = "heart";
+    h.textContent = "💗";
+    h.style.left = Math.random() * window.innerWidth + "px";
+    h.style.top = window.innerHeight - 40 + "px";
+    document.body.appendChild(h);
+    setTimeout(() => h.remove(), 3200);
+  }
+
+  document.addEventListener("mousemove", rowAway);
+  document.addEventListener("touchstart", rowAway);
+  rowAway();
+
+  yesBtn.onclick = () => {
+    document.body.innerHTML = `
+      <div style="
+        height:100vh;
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        align-items:center;
+        text-align:center;
+        background:linear-gradient(135deg,#ff5c8a,#ff9fb8);
+        color:white;
+        padding:20px;">
+        <h1 style="font-size:26px;">Nice catch at the finish 😄</h1>
+        <p style="font-size:16px;max-width:320px;">
+          How about a relaxed coffee or ice-cream?<br>
+          Zero erg tests involved ☕🍦
+        </p>
+      </div>`;
+    for (let i = 0; i < 16; i++) setTimeout(heartPulse, i * 120);
+  };
+</script>
+
+</body>
+</html>
