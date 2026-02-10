@@ -13,17 +13,14 @@
   font-family: "Poppins", sans-serif;
 }
 
-html, body {
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-}
-
 body {
-  background: linear-gradient(to top, #b5fffc 0%, #ffdee9 100%);
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  background: linear-gradient(135deg, #ffdee9, #b5fffc);
 }
 
-/* MAIN SCREEN */
+/* FULL SCREEN HERO */
 .hero {
   position: relative;
   height: 100vh;
@@ -32,66 +29,39 @@ body {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: center;
 }
 
-/* CUTE ROWING ANIMATION */
-.rowing-scene {
+/* ROWING ANIMATION */
+.rower {
   position: absolute;
-  bottom: 10%;
-  width: 100%;
-  height: 120px;
-  overflow: hidden;
+  bottom: 15%;
+  width: 220px;
+  animation: row 2.2s ease-in-out infinite;
 }
 
-.boat {
-  position: absolute;
-  left: -200px;
-  font-size: 3rem;
-  animation: rowAcross 8s linear infinite;
+@keyframes row {
+  0% { transform: translateX(-10px); }
+  50% { transform: translateX(10px); }
+  100% { transform: translateX(-10px); }
 }
 
-/* little bob for realism */
-.boat span {
-  display: inline-block;
-  animation: bob 1.6s ease-in-out infinite;
-}
-
-@keyframes rowAcross {
-  0% { left: -200px; }
-  100% { left: 110%; }
-}
-
-@keyframes bob {
-  0% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-  100% { transform: translateY(0); }
-}
-
-/* TEXT */
 h1 {
   font-size: 2.2rem;
-  margin-bottom: 12px;
-  color: #333;
-  z-index: 2;
-}
-
-p {
-  font-size: 1rem;
-  color: #555;
   margin-bottom: 30px;
+  color: #333;
+  text-align: center;
   z-index: 2;
 }
 
-/* BUTTONS */
 .buttons {
   display: flex;
   gap: 20px;
   z-index: 2;
 }
 
+/* BUTTONS */
 button {
-  padding: 14px 30px;
+  padding: 14px 28px;
   font-size: 1.1rem;
   border-radius: 30px;
   border: none;
@@ -114,7 +84,6 @@ button {
   top: -10px;
   font-size: 24px;
   animation: fall 3.5s linear forwards;
-  pointer-events: none;
 }
 
 @keyframes fall {
@@ -128,7 +97,7 @@ button {
 .yes-screen {
   position: fixed;
   inset: 0;
-  background: url("https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif") center / cover no-repeat;
+  background: url("https://media.giphy.com/media/3oriO0OEd9QIDdllqo/giphy.gif") center/cover no-repeat;
   display: none;
   align-items: center;
   justify-content: center;
@@ -146,19 +115,17 @@ button {
 <body>
 
 <div class="hero" id="main">
-  <h1>Sooo… do you wanna be my Valentine? 🚣‍♀️❤️</h1>
-  <p>Just thought I’d ask — no pressure 🙂</p>
+  <h1>Will you be my Valentine? 🚣‍♀️❤️</h1>
+
+  <img
+    src="https://cdn-icons-png.flaticon.com/512/3043/3043888.png"
+    alt="Rower"
+    class="rower"
+  />
 
   <div class="buttons">
     <button id="yes">Yes 💖</button>
     <button id="no">No 🙃</button>
-  </div>
-
-  <!-- ROWING ANIMATION -->
-  <div class="rowing-scene">
-    <div class="boat">
-      <span>🚣‍♀️💖</span>
-    </div>
   </div>
 </div>
 
@@ -172,23 +139,20 @@ const yesBtn = document.getElementById("yes");
 const yesScreen = document.getElementById("yesScreen");
 const main = document.getElementById("main");
 
-/* NO button dodge (works on mobile too) */
-function dodge() {
-  const x = Math.random() * 220 - 110;
-  const y = Math.random() * 160 - 80;
+/* Slightly more aggressive NO (but not insane) */
+noBtn.addEventListener("mouseenter", () => {
+  const x = Math.random() * 180 - 90;
+  const y = Math.random() * 140 - 70;
   noBtn.style.transform = `translate(${x}px, ${y}px)`;
-}
+});
 
-noBtn.addEventListener("mouseenter", dodge);
-noBtn.addEventListener("touchstart", dodge);
-
-/* YES click */
+/* YES CLICK */
 yesBtn.addEventListener("click", () => {
   main.style.display = "none";
   yesScreen.style.display = "flex";
 
-  for (let i = 0; i < 45; i++) {
-    setTimeout(createHeart, i * 90);
+  for (let i = 0; i < 40; i++) {
+    setTimeout(createHeart, i * 100);
   }
 });
 
